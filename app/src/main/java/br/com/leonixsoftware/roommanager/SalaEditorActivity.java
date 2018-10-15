@@ -48,6 +48,7 @@ public class SalaEditorActivity extends AppLeonixActivity {
                 MainActivity.lstViewSalas.setAdapter(MainActivity.salaAdapter);
                 // Notificando o usuário da adição.
                 Toast.makeText(SalaEditorActivity.this, "Sala adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+                // Fechando Activity.
                 finish();
             }
         });
