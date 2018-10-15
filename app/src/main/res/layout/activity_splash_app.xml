@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="br.com.leonixsoftware.roommanager.SplashApp">
+
+    <ImageView
+        android:id="@+id/imgLogoApp"
+        android:layout_width="218dp"
+        android:layout_height="320dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="83dp"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="85dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/room_manager_logo" />
+
+</android.support.constraint.ConstraintLayout>
