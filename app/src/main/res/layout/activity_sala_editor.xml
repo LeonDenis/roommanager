@@ -13,8 +13,8 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/colorPrimary"
-        android:drawableLeft="@drawable/add"
-        android:text="Adicionar"
+        android:drawableLeft="@drawable/save"
+        android:text="Salvar"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

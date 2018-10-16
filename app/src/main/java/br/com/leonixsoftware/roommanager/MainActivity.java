@@ -12,16 +12,23 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * Created by leondenis on 14/10/18.
+ */
+
 public class MainActivity extends AppLeonixActivity {
     FloatingActionButton adicionar = null;
     public static ListView lstViewSalas = null;
     public static ArrayList<Sala> arraySalas = null;
     public static SalaAdapter salaAdapter = null;
+    // Banco.
+    private static SalaDAO salaDAO = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        salaDAO = new SalaDAO(this);
         // Toolbar.
         Toolbar toolbar = super.load(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -30,7 +37,6 @@ public class MainActivity extends AppLeonixActivity {
         // Elementos
         this.adicionar = super.load(R.id.add);
         this.lstViewSalas = super.load(R.id.lstSalas);
-
         // Adicionar
         this.adicionar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +47,13 @@ public class MainActivity extends AppLeonixActivity {
         // Adapter.
         this.salaAdapter = new SalaAdapter(arraySalas, MainActivity.this);
         this.lstViewSalas.setAdapter(salaAdapter);
+        loadList();
+    }
+
+    public static void loadList() {
+        // Salas gravadas.
+        ArrayList<Sala> salasBanco = salaDAO.getAllSalas();
+        if (salasBanco != null) for (Sala sala : salasBanco) arraySalas.add(sala);
     }
 
 }

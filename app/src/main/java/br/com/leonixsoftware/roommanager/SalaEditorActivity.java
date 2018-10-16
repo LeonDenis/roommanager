@@ -7,22 +7,50 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+/**
+ * Created by leondenis on 14/10/18.
+ */
+
 public class SalaEditorActivity extends AppLeonixActivity {
 
+    // Controles.
     EditText numero = null, apelido = null, bloco = null, andar = null;
     Button btnCancelar = null, btnAdicionar = null;
+    // Modo de salvar.
+    boolean editar = false;
+    // Sala.
+    Sala sala = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sala_editor);
+        // Banco.
+        final SalaDAO salaDAO = new SalaDAO(this);
         // Componentes.
-        this.numero = super.load(R.id.txtNumero);
-        this.apelido = super.load(R.id.txtApelido);
-        this.bloco = super.load(R.id.txtApelido);
-        this.andar = super.load(R.id.txtAndar);
-        this.btnAdicionar = super.load(R.id.btnAdd);
-        this.btnCancelar = super.load(R.id.btnCancelar);
+        this.numero = load(R.id.txtNumero);
+        this.apelido = load(R.id.txtApelido);
+        this.bloco = load(R.id.txtBloco);
+        this.andar = load(R.id.txtAndar);
+        this.btnAdicionar = load(R.id.btnAdd);
+        this.btnCancelar = load(R.id.btnCancelar);
+        // Verificando parametros.
+        Bundle bundle = getIntent().getBundleExtra("info");
+        if (bundle != null) {
+            sala = (Sala) bundle.getSerializable("sala");
+            if (sala != null) {
+                this.numero.setText(sala.getNumero().toString());
+                this.apelido.setText(sala.getApelido().toString());
+                this.andar.setText(sala.getAndar().toString());
+                this.bloco.setText(sala.getBloco().toString());
+                this.numero.setEnabled(false);
+                editar = true;
+            }
+        }
         // Cancelar.
         this.btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,7 +58,7 @@ public class SalaEditorActivity extends AppLeonixActivity {
                 finish();
             }
         });
-        // Adicionar
+        // Salvar.
         this.btnAdicionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,16 +66,49 @@ public class SalaEditorActivity extends AppLeonixActivity {
                 String ape = apelido.getText().toString();
                 String blq = bloco.getText().toString();
                 Integer and = Integer.parseInt(andar.getText().toString());
-                // Auto incremento.
-                Long id = MainActivity.arraySalas.size() + 1L;
-                // Mudando o contexto.
-                MainActivity.salaAdapter.setContext(SalaEditorActivity.this);
-                // Adicionando a sala.
-                MainActivity.arraySalas.add(new Sala(id, num, ape, blq, and));
+                // Verificando salas.
+                if (!editar) {
+                    for (Sala salaVrf : MainActivity.arraySalas) {
+                        if (salaVrf.getNumero().equals(num) && salaVrf.getBloco().equals(blq)) {
+                            Toast.makeText(SalaEditorActivity.this, "A sala " + num + " já existe no bloco " + blq + " .", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    }
+                }
+                if (!editar) {
+                    // Mudando o contexto.
+                    MainActivity.salaAdapter.setContext(SalaEditorActivity.this);
+                    // Nova Sala.
+                    sala = new Sala(num, ape, blq, and);
+                    // Adicionando a sala na lista.
+                    // MainActivity.arraySalas.add(sala);
+                    // Limpando o array.
+                    MainActivity.arraySalas.clear();
+                    // Adicionando a sala no banco.
+                    salaDAO.addSala(sala);
+                    // Marrentando a tela.
+                    MainActivity.loadList();
+                } else {
+                    // Editando a sala na lista.
+                    for (Sala salaEdit : MainActivity.arraySalas) {
+                        if (salaEdit.getId().equals(sala.getId())) {
+                            salaEdit.setApelido(ape);
+                            salaEdit.setNumero(num);
+                            salaEdit.setBloco(blq);
+                            salaEdit.setAndar(and);
+                            // Editando a sala no banco.
+                            salaDAO.updateSala(salaEdit);
+                        }
+                    }
+                }
                 // Setando o adptador com o novo contexto.
                 MainActivity.lstViewSalas.setAdapter(MainActivity.salaAdapter);
-                // Notificando o usuário da adição.
-                Toast.makeText(SalaEditorActivity.this, "Sala adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+                // Notificando o usuário.
+                if (!editar) {
+                    Toast.makeText(SalaEditorActivity.this, "Sala adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SalaEditorActivity.this, "Sala alterada com sucesso!", Toast.LENGTH_SHORT).show();
+                }
                 // Fechando Activity.
                 finish();
             }

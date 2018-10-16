@@ -1,4 +1,4 @@
-#Sun Oct 14 23:56:10 BRT 2018
+#Tue Oct 16 00:03:13 BRT 2018
 base.0=/home/leondenis/AndroidStudioProjects/RoomManager/app/build/intermediates/transforms/dexMerger/debug/44
 path.0=classes.dex
 renamed.0=classes.dex

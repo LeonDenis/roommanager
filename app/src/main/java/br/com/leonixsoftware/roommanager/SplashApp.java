@@ -7,6 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+/**
+ * Created by leondenis on 14/10/18.
+ */
+
 public class SplashApp extends AppLeonixActivity {
 
     @Override

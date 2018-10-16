@@ -5,8 +5,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class SQLiteHelper extends SQLiteOpenHelper {
+/**
+ * Created by leondenis on 14/10/18.
+ */
 
+public class SQLiteHelper extends SQLiteOpenHelper {
 
     // Versão do banco.
     private static final int DATABASE_VERSION = 1;
@@ -26,7 +29,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
-                "ID INTEGER PRIMARY KEY AUTO INCREMENT, " +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "NUMERO INTEGER, " +
                 "APELIDO TEXT, " +
                 "BLOCO TEXT, " +
@@ -40,7 +43,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Dropa a tabela se existir.
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-
         // Cria outra nova.
         this.onCreate(db);
     }

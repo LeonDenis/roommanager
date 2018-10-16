@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Room Manager</string>
     <string name="title_activity_main">Salas</string>
-    <string name="title_activity_add">Adicionar Sala</string>
+    <string name="title_activity_add">Manter Sala</string>
 </resources>

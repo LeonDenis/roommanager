@@ -3,6 +3,10 @@ package br.com.leonixsoftware.roommanager;
 
 import java.io.Serializable;
 
+/**
+ * Created by leondenis on 14/10/18.
+ */
+
 public class Sala implements Serializable {
 
     private Long id = -1L;

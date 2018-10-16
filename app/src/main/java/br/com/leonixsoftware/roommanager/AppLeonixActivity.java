@@ -6,6 +6,10 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
+/**
+ * Created by leondenis on 14/10/18.
+ */
+
 public class AppLeonixActivity extends AppCompatActivity {
 
     @Override
